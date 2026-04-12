@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 122, 107, 90; /* Clay */
+  --background-rgb: 245, 240, 232; /* Plaster */
+}
+
+body {
+  color: #7A6B5A; /* Clay */
+  background: #F5F0E8; /* Plaster */
+  font-family: var(--font-inter), sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, .font-serif {
+  font-family: var(--font-cormorant), serif;
+  color: #2C2417; /* Dark Earth */
+  font-weight: 300;
+}
+
+/* Grain overlay */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+@layer base {
+  button:focus-visible,
+  a:focus-visible {
+    @apply outline-none ring-2 ring-terracotta/40 ring-offset-2 ring-offset-plaster;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-terracotta text-plaster px-8 md:px-[44px] py-4 md:py-[18px] text-[12px] font-medium uppercase tracking-[0.15em] rounded-full transition-all duration-300 hover:bg-burnt-sienna hover:-translate-y-[2px] shadow-sm hover:shadow-md active:scale-95;
+  }
+
+  .text-link {
+    @apply text-terracotta text-[12px] font-medium uppercase tracking-[0.1em] inline-flex items-center gap-2 transition-all duration-300;
+  }
+
+  .text-link:hover .arrow {
+    @apply translate-x-[6px];
+  }
+}
+
+/* Arch clip-path */
+.arch-clip {
+  clip-path: url(#arch-path);
+}
+
+/* Scroll reveal initial state handled by ScrollReveal component but helper class for consistency */
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(30px);
+}
