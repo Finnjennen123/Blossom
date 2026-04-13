@@ -167,7 +167,7 @@ export default function Home() {
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 50vw"
                   quality={100}
-                  placeholder="blur"
+                  unoptimized={true}
                 />
             </div>
           </ScrollReveal>
