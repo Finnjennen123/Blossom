@@ -139,7 +139,7 @@ export default function ServiceDetailClient({
         </div>
       </section>
 
-      <BookingCTA />
+      <BookingCTA href={bookingLink} />
     </div>
   );
 }

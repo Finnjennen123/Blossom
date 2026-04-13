@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import Image from "next/image";
 
@@ -11,6 +12,7 @@ const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { business } = siteConfig;
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,6 +21,13 @@ const Navigation = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Force scroll to top on page change if there's no hash
+  useEffect(() => {
+    if (!window.location.hash) {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname]);
 
   // Prevent scroll when menu is open
   useEffect(() => {

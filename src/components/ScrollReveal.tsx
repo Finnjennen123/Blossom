@@ -5,6 +5,7 @@ import { ReactNode, useRef } from "react";
 
 interface ScrollRevealProps {
   children: ReactNode;
+  className?: string;
   delay?: number;
   direction?: "up" | "down" | "left" | "right";
   distance?: number;
@@ -14,6 +15,7 @@ interface ScrollRevealProps {
 
 const ScrollReveal = ({
   children,
+  className,
   delay = 0,
   direction = "up",
   distance = 30,
@@ -46,6 +48,7 @@ const ScrollReveal = ({
   return (
     <motion.div
       ref={ref}
+      className={className}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={variants}

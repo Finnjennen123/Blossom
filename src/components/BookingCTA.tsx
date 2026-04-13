@@ -1,7 +1,13 @@
 import Link from "next/link";
 import ScrollReveal from "./ScrollReveal";
 
-const BookingCTA = ({ title = "Klaar om tot rust te komen?", buttonText = "Boek een sessie" }) => {
+interface BookingCTAProps {
+  title?: string;
+  buttonText?: string;
+  href?: string;
+}
+
+const BookingCTA = ({ title = "Klaar om tot rust te komen?", buttonText = "Boek een sessie", href = "/boek" }: BookingCTAProps) => {
   return (
     <section className="py-32 px-6 md:px-12 bg-plaster relative overflow-hidden">
       {/* Decorative Arches */}
@@ -13,7 +19,7 @@ const BookingCTA = ({ title = "Klaar om tot rust te komen?", buttonText = "Boek 
           <h2 className="font-serif text-[32px] md:text-[56px] leading-tight mb-8 md:mb-12 max-w-[600px] mx-auto">
             {title}
           </h2>
-          <Link href="/boek" className="btn-primary inline-block">
+          <Link href={href} className="btn-primary inline-block">
             {buttonText}
           </Link>
         </ScrollReveal>

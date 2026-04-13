@@ -56,17 +56,17 @@ function ServiceSelector({ onSelect }: { onSelect: (slug: string) => void }) {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 max-w-[800px] mx-auto">
           {services.map((service, i) => (
-            <ScrollReveal key={service.id} delay={i * 0.1}>
+            <ScrollReveal key={service.id} delay={i * 0.1} className="h-full">
               <button
                 onClick={() => onSelect(service.slug)}
-                className="w-full text-left bg-white/60 backdrop-blur-md border border-sandstone/30 rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-8 shadow-sm hover:shadow-md hover:border-terracotta/30 hover:-translate-y-1 transition-all duration-300 group cursor-pointer"
+                className="w-full h-full flex flex-col text-left bg-white/60 backdrop-blur-md border border-sandstone/30 rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-8 shadow-sm hover:shadow-md hover:border-terracotta/30 hover:-translate-y-1 transition-all duration-300 group cursor-pointer"
               >
                 <div className="text-terracotta mb-4 opacity-70 group-hover:opacity-100 transition-opacity">
                   {serviceIcons[service.id]}
                 </div>
                 <h3 className="font-serif text-[20px] md:text-[22px] text-dark-earth mb-2">{service.name}</h3>
                 <p className="text-clay text-[14px] leading-relaxed mb-4">{service.description}</p>
-                <div className="flex items-center gap-3 text-[13px]">
+                <div className="flex items-center gap-3 text-[13px] mt-auto">
                   <span className="text-terracotta font-medium">{service.duration}</span>
                   <span className="text-sandstone">·</span>
                   <span className="text-clay">€{service.price}</span>
@@ -75,6 +75,27 @@ function ServiceSelector({ onSelect }: { onSelect: (slug: string) => void }) {
             </ScrollReveal>
           ))}
         </div>
+
+        <ScrollReveal>
+          <div className="max-w-[600px] mx-auto mt-12 md:mt-16 bg-white/50 backdrop-blur-md border border-sandstone/20 rounded-[1.5rem] p-6 md:p-8 text-left space-y-4">
+            <h3 className="font-serif text-[18px] text-dark-earth">Hoe werkt betalen?</h3>
+            <ul className="text-clay text-[14px] leading-relaxed space-y-2">
+              <li className="flex gap-2">
+                <span className="text-terracotta mt-0.5 shrink-0">•</span>
+                <span>Bij het boeken betaal je online een <strong className="text-dark-earth">aanbetaling van €25</strong>.</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-terracotta mt-0.5 shrink-0">•</span>
+                <span>Het restbedrag betaal je <strong className="text-dark-earth">ter plaatse</strong> — cash of via overschrijving.</span>
+              </li>
+            </ul>
+            <div className="pt-2 border-t border-sandstone/15">
+              <p className="text-clay/70 text-[13px] leading-relaxed">
+                <strong className="text-clay">Annuleringsbeleid:</strong> Bij annulering minstens 2 dagen op voorhand wordt je aanbetaling van €25 automatisch terugbetaald.
+              </p>
+            </div>
+          </div>
+        </ScrollReveal>
       </section>
     </div>
   );
@@ -84,14 +105,15 @@ function BookingEmbedContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const serviceType = searchParams.get("type");
-  
+
   // Validate slug exists in services or their options
-  const isValidSlug = (slug: string) => 
+  const isValidSlug = (slug: string) =>
     services.some(s => s.slug === slug || s.options?.some(o => o.slug === slug));
 
   const initialSlug = serviceType && isValidSlug(serviceType) ? serviceType : null;
   const [selectedSlug, setSelectedSlug] = useState<string | null>(initialSlug);
   const [calError, setCalError] = useState(false);
+  const [bookingConfirmed, setBookingConfirmed] = useState(false);
 
   const calLink = selectedSlug
     ? `els-vrints/${selectedSlug}`
@@ -109,6 +131,12 @@ function BookingEmbedContent() {
         cal("ui", {
           hideEventTypeDetails: false,
           layout: "month_view",
+        });
+        cal("on", {
+          action: "bookingSuccessful",
+          callback: () => {
+            if (isMounted) setBookingConfirmed(true);
+          },
         });
         setCalError(false);
       } catch (error) {
@@ -134,11 +162,73 @@ function BookingEmbedContent() {
   const parentService = services.find(
     (s) => s.slug === selectedSlug || s.options?.some((o) => o.slug === selectedSlug)
   );
-  
+
   const selectedOption = parentService?.options?.find(o => o.slug === selectedSlug);
   const displayName = parentService?.name || "";
   const displayDuration = selectedOption?.duration || parentService?.duration || "";
-  const displayPrice = selectedOption?.price || parentService?.price || "";
+  const displayPrice = selectedOption?.price || parentService?.price || 0;
+  const remainingAmount = Number(displayPrice) - 25;
+
+  if (bookingConfirmed) {
+    return (
+      <div className="pt-[72px]">
+        <section className="relative px-6 md:px-12 pt-16 md:pt-32 pb-24 md:pb-32 max-w-[700px] mx-auto text-center">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-terracotta/5 rounded-full blur-3xl -z-10 pointer-events-none" />
+
+          <ScrollReveal stagger>
+            <div className="inline-block mb-6">
+              <span className="bg-terracotta/10 text-terracotta text-[11px] font-medium uppercase tracking-[0.15em] px-4 py-2 rounded-full border border-terracotta/20">
+                Bevestigd
+              </span>
+            </div>
+
+            <h1 className="text-[clamp(32px,5vw,56px)] font-serif text-dark-earth mb-4">
+              Je afspraak is geboekt!
+            </h1>
+            <p className="text-clay text-base md:text-[18px] max-w-[500px] mx-auto mb-10 leading-relaxed italic">
+              Je ontvangt een bevestigingsmail met alle details.
+            </p>
+
+            <div className="bg-white/60 backdrop-blur-md border border-sandstone/20 rounded-[2rem] p-8 md:p-10 text-left max-w-[500px] mx-auto space-y-6">
+              <div>
+                <h2 className="font-serif text-[22px] md:text-[26px] text-dark-earth mb-1">{displayName}</h2>
+                <p className="text-clay text-[14px]">{displayDuration} · €{displayPrice}</p>
+              </div>
+
+              <div className="border-t border-sandstone/20 pt-6 space-y-3">
+                <div className="flex justify-between text-[14px]">
+                  <span className="text-clay">Aanbetaling (online betaald)</span>
+                  <span className="text-dark-earth font-medium">€25</span>
+                </div>
+                <div className="flex justify-between text-[16px]">
+                  <span className="text-dark-earth font-medium">Nog te betalen ter plaatse</span>
+                  <span className="text-terracotta font-serif text-[20px]">€{remainingAmount}</span>
+                </div>
+              </div>
+
+              <div className="bg-warm-sand/30 rounded-xl p-4">
+                <p className="text-clay text-[13px] leading-relaxed">
+                  Je betaalt het restbedrag ter plaatse — cash of via overschrijving.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-10 pt-6 border-t border-sandstone/10 max-w-[500px] mx-auto">
+              <p className="text-clay/60 text-[13px] leading-relaxed">
+                <strong className="text-clay/80">Annuleringsbeleid:</strong> Bij annulering minstens 2 dagen op voorhand wordt je aanbetaling van €25 automatisch terugbetaald.
+              </p>
+            </div>
+
+            <div className="mt-10">
+              <a href="/" className="btn-primary inline-block">
+                Terug naar de homepage
+              </a>
+            </div>
+          </ScrollReveal>
+        </section>
+      </div>
+    );
+  }
 
   return (
     <div className="pt-[72px]">
@@ -161,6 +251,9 @@ function BookingEmbedContent() {
           <div className="text-center mb-8">
             <h1 className="text-[clamp(32px,4vw,48px)] font-serif text-dark-earth mb-2">{displayName}</h1>
             <p className="text-clay text-[16px] italic">{displayDuration} · €{displayPrice}</p>
+            <p className="text-clay/70 text-[13px] mt-2">
+              Aanbetaling van <strong className="text-dark-earth">€25</strong> bij boeking — restbedrag (€{remainingAmount}) betaal je ter plaatse
+            </p>
           </div>
         )}
       </section>
@@ -173,7 +266,7 @@ function BookingEmbedContent() {
             <a href="mailto:els@blossom-massage.be" className="btn-primary inline-block">
               Stuur een e-mail
             </a>
-            <button 
+            <button
               onClick={() => window.location.reload()}
               className="block w-full text-[13px] text-clay/60 hover:text-clay mt-6 underline transition-colors"
             >
