@@ -6,6 +6,8 @@ import ArrowLink from "@/components/ArrowLink";
 import BookingCTA from "@/components/BookingCTA";
 import { services } from "@/lib/services";
 import Image from "next/image";
+import elsInActieImg from "../../public/images/els/Els-in-actie.jpeg";
+import elsMainImg from "../../public/images/els/Els-main picture.jpg.avif";
 
 import { siteConfig } from "@/lib/config";
 
@@ -36,16 +38,14 @@ export default function Home() {
           </Link>
         </ScrollReveal>
         
-        <ScrollReveal delay={0.2}>
-          <div className="relative max-w-[400px] md:max-w-none mx-auto md:mx-0">
-            <div className="absolute inset-0 bg-terracotta/5 translate-x-4 translate-y-4 rounded-t-full rounded-b-md -z-10" />
-            <ArchImage 
-              src="/images/els/Els-in-actie.jpeg" 
-              alt={`${business.owner} in actie tijdens een massagebehandeling`}
-              priority
-            />
-          </div>
-        </ScrollReveal>
+        <div className="relative max-w-[400px] md:max-w-none mx-auto md:mx-0">
+          <div className="absolute inset-0 bg-terracotta/5 translate-x-4 translate-y-4 rounded-t-full rounded-b-md -z-10" />
+          <ArchImage 
+            src={elsInActieImg} 
+            alt={`${business.owner} in actie tijdens een massagebehandeling`}
+            priority
+          />
+        </div>
       </section>
 
       {/* Moroccan Divider */}
@@ -159,14 +159,15 @@ export default function Home() {
       <section className="py-24 md:py-32 px-6 md:px-12 max-w-[1200px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-[45%_55%] gap-12 md:gap-16 lg:gap-24 items-center">
           <ScrollReveal>
-            <div className="relative aspect-[4/5] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-xl bg-warm-sand max-w-[440px] mx-auto md:mx-0">
+            <div className="relative aspect-[4/5] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-xl bg-transparent max-w-[440px] mx-auto md:mx-0">
                 <Image 
-                  src="/images/els/Els-main picture.jpg.avif" 
+                  src={elsMainImg} 
                   alt={business.owner} 
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 50vw"
                   quality={100}
+                  placeholder="blur"
                 />
             </div>
           </ScrollReveal>

@@ -30,10 +30,9 @@ export default function ServiceDetailClient({
       <section className="relative px-6 md:px-12 pt-12 md:pt-20 pb-20 md:pb-32 max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-[45%_55%] gap-12 md:gap-16 items-start">
         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-terracotta/5 rounded-full blur-3xl -z-10 pointer-events-none" />
         
-        <ScrollReveal>
           <div className="relative p-2 md:p-6 max-w-[440px] mx-auto md:mx-0">
             <div className="absolute inset-0 bg-warm-sand/10 rounded-[2rem] md:rounded-[3rem] translate-x-4 translate-y-4 -z-10" />
-            <div className="relative aspect-[3/4] rounded-t-full rounded-b-[2rem] md:rounded-b-[3rem] overflow-hidden shadow-xl bg-warm-sand">
+            <div className="relative aspect-[3/4] rounded-t-full rounded-b-[2rem] md:rounded-[3rem] overflow-hidden shadow-xl bg-transparent">
               <Image 
                 src={baseService.image}
                 alt={baseService.name} 
@@ -42,10 +41,10 @@ export default function ServiceDetailClient({
                 style={{ transform: `scale(${baseService.imageScale || 1.1})` }}
                 priority
                 sizes="(max-width: 768px) 100vw, 50vw"
+                placeholder={typeof baseService.image === "object" ? "blur" : "empty"}
               />
             </div>
           </div>
-        </ScrollReveal>
         
         <ScrollReveal stagger>
           <div className="mb-10 md:mb-12 pt-4 md:pt-8">
