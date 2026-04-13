@@ -21,7 +21,7 @@ export default function AboutPage() {
               priority
               sizes="(max-width: 768px) 100vw, 50vw"
               quality={100}
-              unoptimized={true}
+              placeholder="blur"
             />
           </div>
         </div>

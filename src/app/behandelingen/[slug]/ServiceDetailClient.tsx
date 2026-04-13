@@ -41,7 +41,7 @@ export default function ServiceDetailClient({
                 style={{ transform: `scale(${baseService.imageScale || 1.1})` }}
                 priority
                 sizes="(max-width: 768px) 100vw, 50vw"
-                unoptimized={true}
+                placeholder="blur"
               />
             </div>
           </div>

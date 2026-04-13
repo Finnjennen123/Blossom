@@ -3,6 +3,7 @@ import { Inter, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import ImagePreloader from "@/components/ImagePreloader";
 import { siteConfig } from "@/lib/config";
 
 const inter = Inter({
@@ -82,6 +83,7 @@ export default function RootLayout({
           </defs>
         </svg>
 
+        <ImagePreloader />
         <Navigation />
         <main>{children}</main>
         <Footer />

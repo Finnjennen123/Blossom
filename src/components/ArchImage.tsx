@@ -18,7 +18,7 @@ const ArchImage = ({ src, alt, className, priority }: ArchImageProps) => {
         className="object-cover transition-transform duration-700 hover:scale-105"
         priority={priority}
         sizes="(max-width: 768px) 100vw, 50vw"
-        unoptimized={true}
+        placeholder={typeof src === "object" ? "blur" : "empty"}
       />
     </div>
   );
