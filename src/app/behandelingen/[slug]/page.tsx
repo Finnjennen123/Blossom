@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `${service.name} | Blossom`,
       description: service.description,
-      images: [service.image],
+      images: [typeof service.image === "string" ? service.image : service.image.src],
     },
   };
 }
