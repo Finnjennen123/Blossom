@@ -29,15 +29,6 @@ const Navigation = () => {
     }
   }, [pathname]);
 
-  // Prevent scroll when menu is open
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-  }, [isMenuOpen]);
-
   const navLinks = [
     { name: "Behandelingen", href: "/#behandelingen" },
     { name: "Over Els", href: "/over-els" },
@@ -106,34 +97,42 @@ const Navigation = () => {
           </div>
         </button>
 
+        {/* Mobile Menu Backdrop */}
+        <div
+          className={clsx(
+            "fixed inset-0 top-[72px] md:hidden z-[104] bg-plaster/90 backdrop-blur-[40px] backdrop-saturate-150 transition-opacity duration-300",
+            isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          )}
+          onClick={() => setIsMenuOpen(false)}
+        />
+
         {/* Mobile Menu Panel */}
         <div className={clsx(
-          "fixed inset-0 bg-plaster transition-all duration-500 ease-in-out md:hidden z-[105] flex flex-col justify-center px-6",
-          isMenuOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"
+          "fixed left-0 right-0 top-[72px] md:hidden z-[105] transition-all duration-300 ease-out origin-top",
+          isMenuOpen
+            ? "opacity-100 translate-y-0 pointer-events-auto"
+            : "opacity-0 -translate-y-2 pointer-events-none"
         )}>
-          <div className="flex flex-col gap-8 text-center">
-            {navLinks.map((link) => (
+          <div className="bg-plaster/95 backdrop-blur-[40px] backdrop-saturate-150 border-b border-sandstone/20 shadow-[0_8px_24px_-12px_rgba(44,36,23,0.15)]">
+            <div className="px-6 py-4 flex flex-col">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className="py-3 border-b border-sandstone/20 last:border-b-0 text-[15px] font-medium text-dark-earth hover:text-terracotta transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {link.name}
+                </Link>
+              ))}
               <Link
-                key={link.name}
-                href={link.href}
-                className="text-[24px] font-serif text-dark-earth hover:text-terracotta transition-colors"
+                href="/boek"
+                className="btn-primary mt-4 py-3 text-[12px] w-full flex items-center justify-center"
                 onClick={() => setIsMenuOpen(false)}
               >
-                {link.name}
+                Boek nu
               </Link>
-            ))}
-            <Link 
-              href="/boek" 
-              className="btn-primary py-4 px-10 text-[16px] mt-4"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Boek nu
-            </Link>
-          </div>
-          
-          <div className="absolute bottom-12 left-0 w-full text-center px-6">
-            <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-clay/60 mb-2">Locatie</p>
-            <p className="text-clay text-[14px]">{business.address}, {business.city.split(' ').pop()}</p>
+            </div>
           </div>
         </div>
       </div>

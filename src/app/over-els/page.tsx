@@ -48,7 +48,7 @@ export default function AboutPage() {
           </p>
           <div className="text-clay text-base md:text-[18px] leading-relaxed max-w-[520px] space-y-6">
             <p>
-              Mijn reis in de world van massage begon vanuit een diep verlangen naar vertraging. In een wereld die altijd &apos;aan&apos; staat, zag ik hoe we het contact met ons eigen lichaam langzaam verliezen.
+              Mijn reis in de wereld van massage begon vanuit een diep verlangen naar vertraging. In een wereld die altijd &apos;aan&apos; staat, zag ik hoe we het contact met ons eigen lichaam langzaam verliezen.
             </p>
             <p>
               Doorheen de jaren heb ik me verdiept in integratieve massage, holistic pulsing, lomi lomi, crystal healing en polariteitsmassage. Wat begon als een persoonlijke zoektocht naar rust, groeide uit tot een passie om anderen te begeleiden naar diezelfde plek van verstilling.

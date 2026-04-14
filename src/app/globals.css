@@ -68,3 +68,11 @@ body::after {
   opacity: 0;
   transform: translateY(30px);
 }
+
+@keyframes scroll-hint {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(6px); opacity: 0.9; }
+}
+.animate-scroll-hint {
+  animation: scroll-hint 2.2s ease-in-out infinite;
+}

@@ -6,7 +6,7 @@ const Footer = () => {
   const { business } = siteConfig;
   
   return (
-    <footer id="contact" className="bg-night-earth text-linen py-24 px-6 md:px-12">
+    <footer className="bg-night-earth text-linen py-24 px-6 md:px-12">
       <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8">
         <div>
           <div className="flex items-center gap-3 mb-6">

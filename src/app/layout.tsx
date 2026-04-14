@@ -51,7 +51,7 @@ export default function RootLayout({
     "image": "https://blossom-massage.be/images/els/Els-main%20picture.jpg.avif",
     "@id": "https://blossom-massage.be",
     "url": "https://blossom-massage.be",
-    "telephone": siteConfig.business.phone,
+    ...(siteConfig.business.phone ? { "telephone": siteConfig.business.phone } : {}),
     "address": {
       "@type": "PostalAddress",
       "streetAddress": siteConfig.business.address,
@@ -61,8 +61,8 @@ export default function RootLayout({
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": 51.1987654,
-      "longitude": 4.4012345
+      "latitude": 51.2089,
+      "longitude": 4.4023
     },
     "openingHoursSpecification": siteConfig.business.hours.map(h => ({
       "@type": "OpeningHoursSpecification",

@@ -58,7 +58,7 @@ function ServiceSelector({ onSelect }: { onSelect: (slug: string) => void }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 max-w-[800px] mx-auto">
           {services.map((service, i) => (
             <ScrollReveal key={service.id} delay={i * 0.1} className="h-full">
-              <button
+              <div
                 onClick={() => onSelect(service.slug)}
                 className="w-full h-full flex flex-col text-left bg-white/60 backdrop-blur-md border border-sandstone/30 rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-8 shadow-sm hover:shadow-md hover:border-terracotta/30 hover:-translate-y-1 transition-all duration-300 group cursor-pointer"
               >
@@ -72,12 +72,28 @@ function ServiceSelector({ onSelect }: { onSelect: (slug: string) => void }) {
                    </div>
                 </div>
                 <p className="text-clay text-[14px] leading-relaxed mb-4">{service.description}</p>
-                <div className="flex items-center gap-3 text-[13px] mt-auto">
-                  <span className="text-terracotta font-medium">{service.duration}</span>
-                  <span className="text-sandstone">·</span>
-                  <span className="text-clay">€{service.price}</span>
-                </div>
-              </button>
+                {service.options ? (
+                  <div className="flex flex-wrap gap-2 mt-auto pt-1">
+                    {service.options.map((opt) => (
+                      <button
+                        key={opt.slug}
+                        onClick={(e) => { e.stopPropagation(); onSelect(opt.slug); }}
+                        className="text-[13px] px-3 py-1.5 rounded-full border border-sandstone/40 bg-white/60 hover:bg-terracotta hover:text-white hover:border-terracotta transition-colors cursor-pointer"
+                      >
+                        <span className="font-medium">{opt.duration}</span>
+                        <span className="opacity-60 mx-1.5">·</span>
+                        <span>€{opt.price}</span>
+                      </button>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-3 text-[13px] mt-auto">
+                    <span className="text-terracotta font-medium">{service.duration}</span>
+                    <span className="text-sandstone">·</span>
+                    <span className="text-clay">€{service.price}</span>
+                  </div>
+                )}
+              </div>
             </ScrollReveal>
           ))}
         </div>
@@ -290,7 +306,7 @@ function BookingEmbedContent() {
           namespace={namespace}
           calLink={calLink}
           calOrigin="https://app.cal.eu"
-          style={{ width: "100%", height: "100vh", overflow: "auto" }}
+          style={{ width: "100%", minHeight: "720px", height: "calc(100vh - 260px)", maxHeight: "900px", overflow: "auto" }}
           config={{
             layout: "month_view",
           }}
