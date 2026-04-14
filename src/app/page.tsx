@@ -244,3 +244,23 @@ export default function Home() {
     </div>
   );
 }
+3m2!1snl!2sbe!4v1712930000000!5m2!1snl!2sbe" 
+                     width="100%" 
+                     height="100%" 
+                     title="Locatie van Blossom in Antwerpen"
+                     style={{ border: 0 }} 
+                     allowFullScreen={true} 
+                     loading="lazy" 
+                     referrerPolicy="no-referrer-when-downgrade"
+                     className="grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-700"
+                   ></iframe>
+                </div>
+              </ScrollReveal>
+           </div>
+        </div>
+      </section>
+
+      <BookingCTA />
+    </div>
+  );
+}

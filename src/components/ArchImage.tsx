@@ -10,7 +10,7 @@ interface ArchImageProps {
 
 const ArchImage = ({ src, alt, className, priority }: ArchImageProps) => {
   return (
-    <div className={clsx("relative w-full aspect-[3/4] arch-clip overflow-hidden bg-transparent", className)}>
+    <div className={clsx("relative w-full aspect-[3/4] rounded-t-full rounded-b-2xl overflow-hidden bg-transparent", className)}>
       <Image
         src={src}
         alt={alt}

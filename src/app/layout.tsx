@@ -31,6 +31,14 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport = {
+  themeColor: "#F5F0E8",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: "cover",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -73,7 +81,6 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.variable} ${cormorant.variable} antialiased`}>
-...
         {/* SVG Clip Path for Arches */}
         <svg width="0" height="0" className="absolute pointer-events-none">
           <defs>

@@ -10,10 +10,10 @@ const Footer = () => {
       <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8">
         <div>
           <div className="flex items-center gap-3 mb-6">
-            <div className="relative w-8 h-8 brightness-150">
+            <div className="relative w-8 h-8">
               <Image src="/favicon.svg" alt={`${business.name} Logo`} fill className="object-contain" />
             </div>
-            <h2 className="font-serif text-[32px]">{business.name}</h2>
+            <h2 className="font-serif text-[32px] !text-plaster tracking-tight">{business.name}</h2>
           </div>
           <p className="max-w-[280px] opacity-80 text-[15px] leading-relaxed">
             Een plek voor diepe rust en verbinding in het hart van Antwerpen.
@@ -58,6 +58,9 @@ const Footer = () => {
 
       <div className="max-w-[1200px] mx-auto mt-24 pt-8 border-t border-linen/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[13px] opacity-40">
         <p>© {new Date().getFullYear()} {business.name} Antwerpen</p>
+        <p className="hover:opacity-100 transition-opacity duration-300">
+          Built by <a href="mailto:finn.jennen@gmail.com" className="underline underline-offset-4 decoration-linen/20 hover:text-terracotta hover:decoration-terracotta transition-colors">finn.jennen@gmail.com</a>
+        </p>
       </div>
     </footer>
   );

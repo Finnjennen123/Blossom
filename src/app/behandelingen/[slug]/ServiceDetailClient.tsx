@@ -25,20 +25,20 @@ export default function ServiceDetailClient({
   const bookingLink = `/boek?type=${selectedOption.slug}`;
 
   return (
-    <div className="pt-[72px]">
+    <div className="pt-[72px] overflow-x-hidden w-full">
       {/* Service Header & Detail */}
-      <section className="relative px-6 md:px-12 pt-12 md:pt-20 pb-20 md:pb-32 max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-[45%_55%] gap-12 md:gap-16 items-start">
+      <section className="relative px-6 md:px-12 pt-2 md:pt-20 pb-20 md:pb-32 max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-[45%_55%] gap-8 md:gap-16 items-start">
         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-terracotta/5 rounded-full blur-3xl -z-10 pointer-events-none" />
         
           <div className="relative p-2 md:p-6 max-w-[440px] mx-auto md:mx-0">
             <div className="absolute inset-0 bg-warm-sand/10 rounded-[2rem] md:rounded-[3rem] translate-x-4 translate-y-4 -z-10" />
-            <div className="relative aspect-[3/4] rounded-t-full rounded-b-[2rem] md:rounded-[3rem] overflow-hidden shadow-xl bg-transparent">
+            <div className="relative w-full aspect-[3/4] rounded-t-full rounded-b-[2rem] md:rounded-[3rem] overflow-hidden shadow-xl bg-transparent">
               <Image 
                 src={baseService.image}
                 alt={baseService.name} 
                 fill
                 className="object-cover"
-                style={{ transform: `scale(${baseService.imageScale || 1.1})` }}
+                style={{ transform: `scale(${(baseService.imageScale || 1.1) + 0.3})` }}
                 priority
                 sizes="(max-width: 768px) 100vw, 50vw"
                 placeholder="blur"
@@ -47,7 +47,7 @@ export default function ServiceDetailClient({
           </div>
         
         <ScrollReveal stagger>
-          <div className="mb-10 md:mb-12 pt-4 md:pt-8">
+          <div className="mb-10 md:mb-12 pt-0 md:pt-8">
              <div className="inline-block mb-6">
                <span className="bg-white/60 text-terracotta text-[10px] md:text-[11px] font-medium uppercase tracking-[0.15em] px-4 py-2 rounded-full border border-terracotta/20 shadow-sm">
                  Behandeling
@@ -93,9 +93,34 @@ export default function ServiceDetailClient({
             <p className="whitespace-pre-line leading-relaxed">{baseService.fullDescription}</p>
           </div>
 
-          <Link href={bookingLink} className="btn-primary inline-block">
-            Boek deze sessie
-          </Link>
+          {baseService.secondaryImage && (
+            <ScrollReveal delay={0.2} className="block md:hidden mb-16">
+              <div className="relative p-2 max-w-[320px] mx-auto">
+                <div className="absolute inset-0 bg-warm-sand/10 rounded-t-full rounded-b-[2rem] translate-x-3 translate-y-3 -z-10" />
+                <div className="relative w-full aspect-[3/4] rounded-t-full rounded-b-[2rem] overflow-hidden shadow-xl border border-sandstone/10 bg-transparent">
+                  <Image 
+                    src={baseService.secondaryImage} 
+                    alt={`${baseService.name} sfeerbeeld`} 
+                    fill 
+                    className="object-cover scale-[1.4] origin-center"
+                    sizes="(max-width: 768px) 100vw, 320px"
+                  />
+                </div>
+              </div>
+            </ScrollReveal>
+          )}
+
+          <div className="flex flex-col items-center md:items-start gap-3">
+            <Link href={bookingLink} className="btn-primary inline-block">
+              Boek deze sessie
+            </Link>
+            <Link
+              href={`/behandelingen/${baseService.slug}/info`}
+              className="text-clay/60 hover:text-terracotta text-[12px] tracking-wide transition-colors duration-300"
+            >
+              Meer info over deze massage
+            </Link>
+          </div>
         </ScrollReveal>
       </section>
 
@@ -115,9 +140,18 @@ export default function ServiceDetailClient({
               <ScrollReveal key={s.id} delay={index * 0.1}>
                 <Link 
                   href={`/behandelingen/${s.slug}`}
-                  className="group block h-full bg-white/80 rounded-[2.5rem] p-8 md:p-10 transition-all duration-500 hover:bg-white hover:shadow-xl hover:-translate-y-2 border border-sandstone/20 relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-terracotta/20"
+                  className="group flex flex-col h-full bg-white/80 rounded-[2.5rem] transition-all duration-500 hover:bg-white hover:shadow-xl hover:-translate-y-2 border border-sandstone/20 relative overflow-hidden focus:outline-none focus:ring-2 focus:ring-terracotta/20"
                 >
-                  <div className="relative z-10 flex flex-col h-full">
+                  <div className="relative w-full aspect-[4/3] overflow-hidden">
+                    <Image 
+                      src={s.image} 
+                      alt={s.name} 
+                      fill 
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      placeholder="blur"
+                    />
+                  </div>
+                  <div className="relative z-10 flex flex-col h-full p-6 md:p-8">
                     <div className="flex justify-between items-start mb-6">
                        <h3 className="text-[24px] font-serif text-dark-earth leading-tight max-w-[80%]">{s.name}</h3>
                        <div className="bg-warm-sand p-2 rounded-full text-terracotta transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
@@ -138,7 +172,12 @@ export default function ServiceDetailClient({
         </div>
       </section>
 
-      <BookingCTA href={bookingLink} />
+      <BookingCTA 
+        title={`Klaar om de weldaad van de ${baseService.name.toLowerCase()} te ervaren?`}
+        href={bookingLink} 
+        showImage={true}
+        imageVariant="circle"
+      />
     </div>
   );
 }

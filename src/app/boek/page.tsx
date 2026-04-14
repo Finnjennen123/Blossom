@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import Cal, { getCalApi } from "@calcom/embed-react";
 import { services } from "@/lib/services";
 import ScrollReveal from "@/components/ScrollReveal";
+import Image from "next/image";
 
 const serviceIcons: Record<string, React.ReactNode> = {
   integratieve: (
@@ -39,7 +40,7 @@ const serviceIcons: Record<string, React.ReactNode> = {
 function ServiceSelector({ onSelect }: { onSelect: (slug: string) => void }) {
   return (
     <div className="pt-[72px]">
-      <section className="relative px-6 md:px-12 pt-12 md:pt-24 pb-16 md:pb-24 max-w-[1000px] mx-auto text-center">
+      <section className="relative px-6 md:px-12 pt-4 md:pt-24 pb-16 md:pb-24 max-w-[1000px] mx-auto text-center overflow-x-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-terracotta/5 rounded-full blur-3xl -z-10 pointer-events-none" />
 
         <ScrollReveal stagger>
@@ -49,7 +50,7 @@ function ServiceSelector({ onSelect }: { onSelect: (slug: string) => void }) {
             </span>
           </div>
           <h1 className="text-[clamp(36px,6vw,72px)] font-serif mb-6 text-dark-earth">Kies je behandeling</h1>
-          <p className="text-clay text-base md:text-[18px] max-w-[600px] mx-auto mb-10 md:mb-16 leading-relaxed italic">
+          <p className="text-clay text-base md:text-[18px] max-w-[600px] mx-auto mb-8 md:mb-16 leading-relaxed italic">
             Selecteer de massage die bij je past, en kies daarna een moment.
           </p>
         </ScrollReveal>
@@ -61,10 +62,15 @@ function ServiceSelector({ onSelect }: { onSelect: (slug: string) => void }) {
                 onClick={() => onSelect(service.slug)}
                 className="w-full h-full flex flex-col text-left bg-white/60 backdrop-blur-md border border-sandstone/30 rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-8 shadow-sm hover:shadow-md hover:border-terracotta/30 hover:-translate-y-1 transition-all duration-300 group cursor-pointer"
               >
-                <div className="text-terracotta mb-4 opacity-70 group-hover:opacity-100 transition-opacity">
-                  {serviceIcons[service.id]}
+                <div className="relative w-full aspect-video rounded-[1rem] overflow-hidden mb-6 ring-1 ring-sandstone/20">
+                  <Image src={service.image} alt={service.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" placeholder="blur" />
                 </div>
-                <h3 className="font-serif text-[20px] md:text-[22px] text-dark-earth mb-2">{service.name}</h3>
+                <div className="flex justify-between items-start gap-2 mb-2">
+                   <h3 className="font-serif text-[20px] md:text-[22px] text-dark-earth leading-tight">{service.name}</h3>
+                   <div className="text-terracotta opacity-70 group-hover:opacity-100 transition-opacity mt-1">
+                     {serviceIcons[service.id]}
+                   </div>
+                </div>
                 <p className="text-clay text-[14px] leading-relaxed mb-4">{service.description}</p>
                 <div className="flex items-center gap-3 text-[13px] mt-auto">
                   <span className="text-terracotta font-medium">{service.duration}</span>
@@ -152,7 +158,8 @@ function BookingEmbedContent() {
       <ServiceSelector
         onSelect={(slug) => {
           setSelectedSlug(slug);
-          router.replace(`/boek?type=${slug}`, { scroll: false });
+          router.replace(`/boek?type=${slug}`, { scroll: true });
+          window.scrollTo(0, 0);
         }}
       />
     );
@@ -171,8 +178,8 @@ function BookingEmbedContent() {
 
   if (bookingConfirmed) {
     return (
-      <div className="pt-[72px]">
-        <section className="relative px-6 md:px-12 pt-16 md:pt-32 pb-24 md:pb-32 max-w-[700px] mx-auto text-center">
+      <div className="pt-[72px] overflow-x-hidden w-full">
+        <section className="relative px-6 md:px-12 pt-8 md:pt-32 pb-24 md:pb-32 max-w-[700px] mx-auto text-center">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-terracotta/5 rounded-full blur-3xl -z-10 pointer-events-none" />
 
           <ScrollReveal stagger>
@@ -231,8 +238,8 @@ function BookingEmbedContent() {
   }
 
   return (
-    <div className="pt-[72px]">
-      <section className="relative px-6 md:px-12 pt-16 pb-8 max-w-[1000px] mx-auto">
+    <div className="pt-[72px] overflow-x-hidden w-full">
+      <section className="relative px-6 md:px-12 pt-8 pb-8 max-w-[1000px] mx-auto overflow-x-hidden">
         <button
           onClick={() => {
             setSelectedSlug(null);
@@ -249,6 +256,9 @@ function BookingEmbedContent() {
 
         {parentService && (
           <div className="text-center mb-8">
+            <div className="relative w-20 h-20 md:w-28 md:h-28 mx-auto rounded-full overflow-hidden mb-5 shadow-sm border-2 border-white ring-1 ring-sandstone/20">
+              <Image src={parentService.image} alt={displayName} fill className="object-cover" placeholder="blur" />
+            </div>
             <h1 className="text-[clamp(32px,4vw,48px)] font-serif text-dark-earth mb-2">{displayName}</h1>
             <p className="text-clay text-[16px] italic">{displayDuration} · €{displayPrice}</p>
             <p className="text-clay/70 text-[13px] mt-2">
