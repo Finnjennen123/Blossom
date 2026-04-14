@@ -7,12 +7,12 @@ import elsMainImg from "../../../public/images/els/Els-main picture.jpg.avif";
 
 export default function AboutPage() {
   return (
-    <div className="pt-[72px]">
+    <div className="pt-[72px] overflow-x-hidden w-full">
       {/* Header */}
-      <section className="px-6 md:px-12 pt-12 md:pt-20 pb-20 md:pb-32 max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-[45%_55%] gap-12 md:gap-16 lg:gap-24 items-center">
-        <div className="relative max-w-[440px] mx-auto md:mx-0">
+      <section className="px-6 md:px-12 pt-2 md:pt-8 pb-20 md:pb-32 max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-[45%_55%] gap-8 md:gap-16 lg:gap-24 items-center">
+        <div className="hidden md:block relative max-w-[440px] mx-auto md:mx-0">
           {/* Simple elegant frame instead of the pointed arch */}
-          <div className="relative aspect-[3/4] rounded-t-full md:rounded-t-[10rem] rounded-b-2xl overflow-hidden shadow-xl bg-transparent">
+          <div className="relative w-full aspect-[3/4] rounded-t-full md:rounded-t-[10rem] rounded-b-2xl overflow-hidden shadow-xl bg-transparent">
             <Image 
               src={elsMainImg} 
               alt="Els Vrints" 
@@ -26,6 +26,21 @@ export default function AboutPage() {
           </div>
         </div>
         <ScrollReveal stagger>
+          {/* Mobile Profile Image */}
+          <div className="md:hidden mb-8 flex justify-start">
+             <div className="relative p-1">
+                <div className="absolute inset-0 bg-terracotta/10 translate-x-1 translate-y-1 rounded-full -z-10" />
+                <div className="relative w-24 h-24 rounded-full overflow-hidden border border-terracotta/20 shadow-md">
+                  <Image 
+                    src={elsMainImg} 
+                    alt="Els" 
+                    fill 
+                    className="object-cover"
+                    priority
+                  />
+                </div>
+             </div>
+          </div>
           <h1 className="text-[clamp(44px,8vw,80px)] font-serif leading-none mb-6 text-dark-earth">Els Vrints</h1>
           <div className="w-16 h-[2px] bg-terracotta mb-8" />
           <p className="font-serif italic text-[clamp(22px,3vw,32px)] leading-snug text-terracotta mb-8">
@@ -89,6 +104,8 @@ export default function AboutPage() {
       <BookingCTA 
         title="Klaar om de rust in jezelf te herontdekken?" 
         buttonText="Boek een moment voor jezelf" 
+        showImage={true}
+        imageVariant="circle"
       />
     </div>
   );

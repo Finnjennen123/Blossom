@@ -15,12 +15,24 @@ export default function Home() {
   const { business } = siteConfig;
 
   return (
-    <div className="pt-[72px]">
+    <div className="pt-[72px] overflow-x-hidden w-full">
       {/* Hero Section */}
-      <section className="relative px-6 md:px-12 pt-16 md:pt-20 pb-24 md:pb-32 max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-[55%_45%] gap-12 lg:gap-20 items-center">
-        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-terracotta/5 rounded-full blur-3xl -z-10 pointer-events-none" />
+      <section className="relative px-6 md:px-12 pt-4 md:pt-10 pb-20 md:pb-32 max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-[55%_45%] gap-8 lg:gap-20 items-center overflow-hidden md:overflow-visible min-h-[500px] md:min-h-0 rounded-[2.5rem] md:rounded-none mx-4 md:mx-auto mt-4 md:mt-0">
+        {/* Mobile background image and frosted glass */}
+        <div className="absolute inset-0 md:hidden -z-20">
+          <Image 
+            src={elsInActieImg} 
+            alt="Achtergrond sfeerbeeld" 
+            fill 
+            className="object-cover"
+            priority
+          />
+        </div>
+        <div className="absolute inset-0 md:hidden bg-white/70 backdrop-blur-md -z-10" />
         
-        <ScrollReveal stagger>
+        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-terracotta/5 rounded-full blur-3xl -z-10 pointer-events-none hidden md:block" />
+        
+        <ScrollReveal stagger className="order-2 md:order-1 relative z-10 py-10 md:py-0">
           <div className="inline-block mb-6">
              <span className="bg-white/60 text-terracotta text-[10px] md:text-[11px] font-medium uppercase tracking-[0.2em] px-4 py-2 rounded-full border border-terracotta/20 shadow-sm">
                Massagetherapie Antwerpen
@@ -38,14 +50,14 @@ export default function Home() {
           </Link>
         </ScrollReveal>
         
-        <div className="relative max-w-[400px] md:max-w-none mx-auto md:mx-0">
+        <ScrollReveal className="hidden md:block relative max-w-[400px] md:max-w-none mx-auto md:mx-0 order-1 md:order-2 mb-8 md:mb-0">
           <div className="absolute inset-0 bg-terracotta/5 translate-x-4 translate-y-4 rounded-t-full rounded-b-md -z-10" />
           <ArchImage 
             src={elsInActieImg} 
             alt={`${business.owner} in actie tijdens een massagebehandeling`}
             priority
           />
-        </div>
+        </ScrollReveal>
       </section>
 
       {/* Moroccan Divider */}
@@ -228,7 +240,7 @@ export default function Home() {
         </div>
       </section>
 
-      <BookingCTA />
+      <BookingCTA showImage={true} imageVariant="circle" />
     </div>
   );
 }
